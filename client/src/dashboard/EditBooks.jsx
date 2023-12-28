@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useLoaderData, useParams } from "react-router-dom";
 import { Button, Textarea, Select, Label, TextInput } from "flowbite-react";
+import { useState } from "react";
 
-const UploadBook = () => {
+const EditBooks = () => {
+  const { id } = useParams();
+  const {
+    bookTitle,
+    authorName,
+    imageUrl,
+    category,
+    bookDescription,
+    bookPdfUrl,
+    price,
+    currency,
+    rating,
+  } = useLoaderData();
+
   const bookCategories = [
     "Fiction",
     "Non-Fiction",
@@ -30,7 +44,7 @@ const UploadBook = () => {
   };
 
   //handle book submission
-  const handleBookSubmit = (event) => {
+  const handleUpdate = (event) => {
     event.preventDefault();
     const form = event.target;
 
@@ -40,38 +54,42 @@ const UploadBook = () => {
     const category = form.categoryName.value;
     const bookDescription = form.bookDescription.value;
     const bookPdfUrl = form.bookPdfUrl.value;
+    const price = form.price.value;
+    const currency = form.currency.value;
+    const rating = form.rating.value;
 
-    const bookObj = {
+    const updateBookObj = {
       bookTitle,
       authorName,
       imageUrl,
       category,
       bookDescription,
       bookPdfUrl,
+      price,
+      currency,
+      rating,
     };
-    console.log(bookObj);
-
-    //send data to db
-    fetch("http://localhost:4000/upload-book", {
-      method: "POST",
+    //console.log(bookObj);
+    //update book data
+    fetch(`http://localhost:4000/book/${id}`, {
+      method: "PATCH",
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(bookObj),
+      body: JSON.stringify(updateBookObj),
     })
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data)
-        alert("Book uploaded successfully!!");
-        form.reset();
+        console.log(data);
+        alert("Book is updated successfully!!");
       });
   };
 
   return (
     <div className="px-4 my-12">
-      <h2 className="mb-8 text-3xl font-bold">Upload A Book</h2>
+      <h2 className="mb-8 text-3xl font-bold">Update the book data</h2>
       <form
-        onSubmit={handleBookSubmit}
+        onSubmit={handleUpdate}
         className="flex lg:w-[1180px] flex-col flex-wrap gap-4"
       >
         {/* first row */}
@@ -85,6 +103,7 @@ const UploadBook = () => {
               type="bookTitle"
               placeholder="Book name"
               requiredtype="text"
+              defaultValue={bookTitle}
             />
           </div>
           {/* authorName     */}
@@ -97,6 +116,7 @@ const UploadBook = () => {
               type="authorName"
               placeholder="Author Name"
               requiredtype="text"
+              defaultValue={authorName}
             />
           </div>
         </div>
@@ -111,9 +131,10 @@ const UploadBook = () => {
               type="imageUrl"
               placeholder="Book Image URL"
               requiredtype="text"
+              defaultValue={imageUrl}
             />
           </div>
-          {/* authorName     */}
+          {/* Category   */}
           <div className="lg:w-1/2">
             <div className="mb-2 block">
               <Label htmlFor="inputState" value="Book Category" />
@@ -146,6 +167,7 @@ const UploadBook = () => {
             required
             className="w-full"
             rows={6}
+            defaultValue={bookDescription}
           />
         </div>
         {/*book pdn link */}
@@ -158,14 +180,54 @@ const UploadBook = () => {
             type="bookPdfUrl"
             placeholder="book pdf url"
             requiredtype="text"
+            defaultValue={bookPdfUrl}
+          />
+        </div>
+        {/*price */}
+        <div className="max-w-md">
+          <div className="mb-2 block">
+            <Label htmlFor="price" value="Price" />
+          </div>
+          <TextInput
+            id="price"
+            type="price"
+            placeholder="Price"
+            requiredtype="number"
+            defaultValue={price}
+          />
+        </div>
+        {/*currency */}
+        <div className="max-w-md">
+          <div className="mb-2 block">
+            <Label htmlFor="currency" value="Currency" />
+          </div>
+          <TextInput
+            id="currency"
+            type="currency"
+            placeholder="Currency"
+            requiredtype="text"
+            defaultValue={currency}
+          />
+        </div>
+        {/*rating */}
+        <div className="max-w-md">
+          <div className="mb-2 block">
+            <Label htmlFor="rating" value="Rating" />
+          </div>
+          <TextInput
+            id="rating"
+            type="rating"
+            placeholder="Rating"
+            requiredtype="number"
+            defaultValue={rating}
           />
         </div>
         <Button type="submit" className="mt-5">
-          Upload Book
+          Update Book
         </Button>
       </form>
     </div>
   );
 };
 
-export default UploadBook;
+export default EditBooks;

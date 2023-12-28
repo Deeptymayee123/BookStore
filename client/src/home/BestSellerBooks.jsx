@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BooksCard from "../Components/BooksCard";
 
 const BestSellerBooks = () => {
@@ -7,7 +7,7 @@ const BestSellerBooks = () => {
   useEffect(() => {
     fetch("http://localhost:4000/all-books")
       .then((res) => res.json())
-      .then((data) => setBooks(data.slice(0, 10)));
+      .then((data) => setBooks(data.slice(0, 11)));
   }, []);
   return (
     <div>

@@ -1,5 +1,6 @@
 import { Footer } from "flowbite-react";
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
+import { FaDribbble } from "react-icons/fa6";
 
 const MyFooter = () => {
   return (
@@ -49,6 +50,7 @@ const MyFooter = () => {
             <Footer.Icon href="#" icon={BsInstagram} />
             <Footer.Icon href="#" icon={BsTwitter} />
             <Footer.Icon href="#" icon={BsGithub} />
+            <Footer.Icon href="#" icon={FaDribbble} />
           </div>
         </div>
       </div>

@@ -1,20 +1,25 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 //react icons
 import { FaBarsStaggered, FaBlog, FaXmark } from "react-icons/fa6";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const navItems = [
   { link: "Home", path: "/" },
   { link: "About", path: "/about" },
   { link: "shop", path: "/shop" },
-  { link: "sell your Book", path: "/admin/dasboat" },
+  { link: "sell your Book", path: "/admin/dashbaord" },
   { link: "Blog", path: "/blog" },
 ];
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+
+  const { user } = useContext(AuthContext);
+  console.log(user);
+
   //toggle menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

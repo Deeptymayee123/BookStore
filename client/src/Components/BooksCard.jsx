@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -14,7 +14,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { Pagination } from "swiper/modules";
 
 const BooksCard = ({ headLines, books }) => {
-  console.log(books);
+  //console.log(books);
   return (
     <div className="my-16 px-4 lg:px-24">
       <h2 className="text-5xl text-center font--bold text-black my-5">

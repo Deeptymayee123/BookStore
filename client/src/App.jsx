@@ -11,6 +11,9 @@ function App() {
       <div className="min-h-screen">
         <Outlet />
       </div>
+      <a className="App-link" target="_blank" rel="noopener noreference">
+        Give 5$
+      </a>
       <MyFooter />
     </>
   );
