@@ -1,11 +1,26 @@
 const express = require("express");
 const app = express();
+
 const port = process.env.PORT || 4000;
 const cors = require("cors");
+const morgan = require("morgan");
 const mongoose = require("mongoose");
-//midleware
+const connectDB = require("./db.config");
+const Razorpay = require("razorpay");
+
+var razorpay = new Razorpay({
+  key_id: "rzp_test_h2OOUV7IDFGK7j",
+  key_secret: "D38xcCT15QZCigzOYK3tUJF5",
+});
+
+//connection
+//connectDB;
+
+//middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 const uri = "mongodb://localhost:27017/bookStore";
 
@@ -116,6 +131,11 @@ async function run() {
 }
 run().catch(console.dir);
 
+//api call here
+app.get("/payment/checkout", async (req, res) => {
+  const { name, amount } = req.body;
+  const order = await razorpay.orders.create({});
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

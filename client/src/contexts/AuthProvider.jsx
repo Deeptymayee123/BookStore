@@ -37,13 +37,16 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    return signOut(auth);
+    signOut(auth)
+      .then(() => console.log("Signout successful"))
+      .catch((err) => console.log("An error occured", JSON.stringify(err)));
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("user: ", currentUser);
       setUser(currentUser);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -57,6 +60,7 @@ const AuthProvider = ({ children }) => {
     login,
     logOut,
   };
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

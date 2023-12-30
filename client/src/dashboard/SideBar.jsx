@@ -14,12 +14,8 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const SideBar = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   console.log(user);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <Sidebar aria-label="Sidebar with content separator example">

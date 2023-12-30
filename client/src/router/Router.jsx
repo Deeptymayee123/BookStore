@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
       {
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/admin/dashboard",
+    path: "admin/dashboard",
     element: <DashboardLayout />,
     children: [
       {
@@ -60,15 +60,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/admin/dashboard/upload",
+        path: "upload",
         element: <UploadBook />,
       },
       {
-        path: "/admin/dashboard/manage",
+        path: "manage",
         element: <ManageBooks />,
       },
       {
-        path: "/admin/dashboard/edit-books/:id",
+        path: "edit-books/:id",
         element: <EditBooks />,
         loader: ({ params }) =>
           fetch(`http://localhost:4000/book/${params.id}`),
