@@ -7,10 +7,12 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const connectDB = require("./db.config");
 const Razorpay = require("razorpay");
+const crypto = require("./Order.modules");
+const { OrderModel } = require("./Order.modules");
 
 var razorpay = new Razorpay({
-  key_id: "rzp_test_h2OOUV7IDFGK7j",
-  key_secret: "D38xcCT15QZCigzOYK3tUJF5",
+  key_id: "rzp_test_xZgvhQhDPAIcFr",
+  key_secret: "XmoSwyMfXGvUZc8GafZFTNmGff",
 });
 
 //connection
@@ -132,10 +134,59 @@ async function run() {
 run().catch(console.dir);
 
 //api call here
-app.get("/payment/checkout", async (req, res) => {
+app.post("/payment/checkout", async (req, res) => {
   const { name, amount } = req.body;
-  const order = await razorpay.orders.create({});
+  const order = await razorpay.orders.create({
+    amount: Number(amount * 100), // amount in the smallest currency unit
+    currency: "INR",
+  });
+
+  await OrderModel.create({
+    order_id: order.id,
+    name: name,
+    amount: amount,
+  });
+
+  console.log({ order });
+  res.json(order);
 });
+
+app.post("/payment/payment-verification", async (req, res) => {
+  const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+    req.body;
+  const body_data = razorpay_order_id + " " + razorpay_payment_id;
+
+  const expect = crypto
+    .createHmac("sha256", "XmoSwyMfXGvUZc8GafZFTNmGff")
+    .update(body_data)
+    .diget("hex");
+  const isValid = expect === razorpay_signature;
+  if (isValid) {
+    await OrderModel.findOne(
+      { order_id: razorpay_order_id },
+      {
+        $set: { razorpay_order_id, razorpay_payment_id, razorpay_signature },
+      }
+    );
+    res.redirect(
+      `http://localhost:3000/success?payment_id=${razorpay_payment_id}`
+    );
+    return;
+  } else {
+    res.redirect("http://localhost:3000/failed");
+    return;
+  }
+
+  await OrderModel.create({
+    order_id: order.id,
+    name: name,
+    amount: amount,
+  });
+
+  console.log({ order });
+  res.json(order);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

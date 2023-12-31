@@ -96,7 +96,7 @@ const router = createBrowserRouter([
     element: <Success />,
   },
   {
-    path: "Failed",
+    path: "failed",
     element: <Failed />,
   },
 ]);
