@@ -1,25 +1,24 @@
-import React, { useRef, useState } from "react";
 //import Swiper React components;
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/effect-cards";
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 
-import "./BannerCard.css";
+import './BannerCard.css';
 
 // import required modules
-import { EffectCards } from "swiper/modules";
+import { EffectCards } from 'swiper/modules';
 
 const BannerCard = () => {
   return (
-    <div className="banner">
-      {" "}
+    <div className='banner'>
+      {' '}
       <Swiper
-        effect={"cards"}
+        effect={'cards'}
         grabCursor={true}
         modules={[EffectCards]}
-        className="mySwiper"
+        className='mySwiper'
       >
         <SwiperSlide></SwiperSlide>
         <SwiperSlide></SwiperSlide>

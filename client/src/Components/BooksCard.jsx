@@ -59,7 +59,7 @@ const BooksCard = ({ headLines, books }) => {
                     <h3>{book.bookTitle}</h3>
                     <p>{book.authorName}</p>
                   </div>
-                  <div>$10.0</div>
+                  <div className="font-bold">₹ {book?.price} </div>
                 </div>
               </Link>
             </SwiperSlide>

@@ -42,7 +42,7 @@ const NavBar = () => {
   }, []);
 
   if (loading) {
-    return null;
+    return <p>Loading....</p>;
   }
 
   return (
@@ -56,7 +56,7 @@ const NavBar = () => {
           {/* logo*/}
           <Link
             to='/'
-            className='text-2xl font-bold text-blue-700 flex items-center ga'
+            className='text-2xl font-bold text-blue-700 flex items-center'
           >
             <FaBlog className='inline-block' />
             Books
@@ -97,7 +97,7 @@ const NavBar = () => {
             )}
           </div>
 
-          {/menu btn for the mobile devices/}
+          {/* mobile menu */}
           <div className='visible md:hidden'>
             <button
               onClick={toggleMenu}
@@ -111,7 +111,8 @@ const NavBar = () => {
             </button>
           </div>
         </div>
-        {/navitems for sm devices/}
+
+        {/* navbar for small devices */}
         <div
           className={`space-y-4 px-4 mt-12 py-7 bg-blue-700 ${
             isMenuOpen ? 'block fixed top-0 right-0 left-0' : 'hidden'

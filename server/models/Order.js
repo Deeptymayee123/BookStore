@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const schema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -8,20 +8,22 @@ const schema = new mongoose.Schema(
     amount: {
       type: Number,
     },
-    order_id: {
-      type: String,
-    },
-    razorpay_payment_id: {
-      type: String,
-      default: null,
-    },
     razorpay_order_id: {
       type: String,
       default: null,
     },
+    product_id: {
+      type: String,
+      required: true,
+    },
+    razorpay_payment_id: {
+      type: String,
+    },
+    razorpay_order_id: {
+      type: String,
+    },
     razorpay_signature: {
       type: String,
-      default: null,
     },
   },
   {
@@ -29,8 +31,4 @@ const schema = new mongoose.Schema(
   }
 );
 
-const OrderModel = mongoose.model("order", "schema");
-
-module.exports = {
-  OrderModel,
-};
+module.exports = mongoose.model("Order", OrderSchema);
